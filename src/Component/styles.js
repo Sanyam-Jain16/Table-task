@@ -1,4 +1,4 @@
-export const styles = {
+export const table = {
   container: {
     maxWidth: "1200px",
     margin: "auto",

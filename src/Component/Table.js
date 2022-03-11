@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styles } from "./styles";
+import { table } from "./styles";
 
 function Table() {
   const tableData = JSON.parse(localStorage.getItem("items"));
@@ -13,6 +13,12 @@ function Table() {
   });
 
   const handleClick = (item) => {
+    setNewData({
+      first_name: item.first_name,
+      last_name: item.last_name,
+      email: item.email,
+      id: item.id,
+    });
     setId(item.id);
   };
   
@@ -45,14 +51,14 @@ function Table() {
   };
 
   return (
-    <div style={styles.container}>
-      <table style={styles.table}>
+    <div style={table.container}>
+      <table style={table.table}>
         <thead>
           <tr>
-            <th style={styles.head}>First Name</th>
-            <th style={styles.head}>Last Name</th>
-            <th style={styles.head}>Email</th>
-            <th colSpan="2" style={styles.head}>
+            <th style={table.head}>First Name</th>
+            <th style={table.head}>Last Name</th>
+            <th style={table.head}>Email</th>
+            <th colSpan="2" style={table.head}>
               Options
             </th>
           </tr>
@@ -62,59 +68,58 @@ function Table() {
             users.map((item) => {
               return (
                 <React.Fragment key={item.id}>
-                  <tr>
-                    <td style={styles.body}>{item.first_name}</td>
-                    <td style={styles.body}>{item.last_name}</td>
-                    <td style={styles.body}>{item.email}</td>
-                    <td style={styles.body} onClick={() => handleClick(item)}>
-                      Edit
-                    </td>
-                    <td style={styles.body} onClick={() => handleDelete(item)}>
-                      Delete
-                    </td>
-                  </tr>
-                  {item.id === id && (
+                  {item.id === id ? (
                     <tr>
-                      <td style={styles.tdHidden}>
+                      <td style={table.tdHidden}>
                         <input
                           placeholder="first name"
                           type="text"
                           value={newData.first_name}
                           onChange={(e) => handleOnChange(e)}
                           name="first_name"
-                          style={styles.tdHiddentext}
+                          style={table.tdHiddentext}
                         />
                       </td>
-                      <td style={styles.tdHidden}>
+                      <td style={table.tdHidden}>
                         <input
                           type="text"
                           value={newData.last_name}
                           onChange={(e) => handleOnChange(e)}
                           name="last_name"
                           placeholder="last name"
-                          style={styles.tdHiddentext}
+                          style={table.tdHiddentext}
                         />
                       </td>
-                      <td style={styles.tdHidden}>
+                      <td style={table.tdHidden}>
                         <input
                           type="text"
                           value={newData.email}
                           onChange={(e) => handleOnChange(e)}
                           name="email"
                           placeholder=" email"
-                          style={styles.tdHiddentext}
+                          style={table.tdHiddentext}
                         />
                       </td>
                       <td>
                         <button
-                          style={styles.editButton}
+                          style={table.editButton}
                           onClick={() => handleUpdate()}
                         >
                           Save
                         </button>
                       </td>
                     </tr>
-                  )}
+                  ):  <tr>
+                  <td style={table.body}>{item.first_name}</td>
+                  <td style={table.body}>{item.last_name}</td>
+                  <td style={table.body}>{item.email}</td>
+                  <td style={table.body} onClick={() => handleClick(item)}>
+                    Edit
+                  </td>
+                  <td style={table.body} onClick={() => handleDelete(item)}>
+                    Delete
+                  </td>
+                </tr>}
                 </React.Fragment>
               );
             })}
